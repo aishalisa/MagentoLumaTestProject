@@ -11,6 +11,8 @@ public class CredentialsReader {
     private final String userPassword;
     private final String surname;
     private final String name;
+    private final String weakPassword;
+    private final String wrongEmail;
 
     public CredentialsReader(){
         String configPath = "src/main/resources/credentials.properties";
@@ -31,6 +33,8 @@ public class CredentialsReader {
         userPassword = properties.getProperty("userPassword");
         name = properties.getProperty("name");
         surname = properties.getProperty("surname");
+        weakPassword = properties.getProperty("weakPassword");
+        wrongEmail = properties.getProperty("wrongEmail");
     }
 
     public String getUserEmail() {
@@ -47,5 +51,13 @@ public class CredentialsReader {
 
     public String getName() {
         return name;
+    }
+
+    public String getWeakPassword() {
+        return weakPassword;
+    }
+
+    public String getWrongEmail() {
+        return wrongEmail;
     }
 }

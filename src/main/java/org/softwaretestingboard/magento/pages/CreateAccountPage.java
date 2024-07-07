@@ -24,13 +24,40 @@ public class CreateAccountPage extends BasePage {
     protected WebElement getPasswordField2;
     @FindBy(xpath = ".//button/span[text()='Create an Account']")
     protected WebElement submitButton;
+    @FindBy(xpath = ".//div[@role='alert']")
+    protected WebElement alertMessage;
+    @FindBy(className = "password-weak")
+    protected WebElement alertWeakPassword;
+    @FindBy(id = "email_address-error")
+    protected WebElement wrongEmail;
 
-    public void insertPersonalInfoAndSubmit() {
+    public CreateAccountPage insertPersonalInfoAndSubmit() {
         insertName();
         insertSurname();
         insertEmail();
         insertPasswords();
         pressCreateAccountButton();
+        return this;
+    }
+    public CreateAccountPage insertInfoAndWeakPassword(){
+        insertName();
+        insertSurname();
+        insertEmail();
+        insertWeakPassword();
+        return this;
+    }
+    public CreateAccountPage insertInfoAndWrongEmail(){
+        insertName();
+        insertSurname();
+        insertPasswords();
+        insertWrongEmail();
+        pressCreateAccountButton();
+        return this;
+    }
+
+    private void insertWrongEmail() {
+        String wrongEmail = reader.getWrongEmail();
+        fieldEmail.sendKeys(wrongEmail);
     }
 
     void insertName() {
@@ -53,7 +80,21 @@ public class CreateAccountPage extends BasePage {
         passwordField1.sendKeys(userPassword);
         getPasswordField2.sendKeys(userPassword);
     }
+    void insertWeakPassword(){
+        String weakPassword = reader.getWeakPassword();
+        passwordField1.sendKeys(weakPassword);
+        getPasswordField2.sendKeys(weakPassword);
+    }
     void pressCreateAccountButton(){
         submitButton.click();
+    }
+    public Boolean isAlertVisible(){
+        return alertMessage.isDisplayed();
+    }
+    public Boolean isVisibleAlertWeakPassword(){
+        return alertWeakPassword.isDisplayed();
+    }
+    public Boolean isVisibleAlertWrongEmail(){
+        return wrongEmail.isDisplayed();
     }
 }
