@@ -5,13 +5,17 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.softwaretestingboard.magento.helpers.CredentialsReader;
 
-public class BasePage {
+import java.time.Duration;
+
+public abstract class BasePage {
     protected WebDriver driver;
-    WebDriverWait wait;
-    CredentialsReader reader;
+    protected WebDriverWait wait;
+    protected CredentialsReader reader;
+    int TIMEOUT = 30;
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         PageFactory.initElements(driver, this);
     }
 
