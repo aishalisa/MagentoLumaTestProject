@@ -3,6 +3,7 @@ package org.softwaretestingboard.magento.components;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.softwaretestingboard.magento.helpers.CredentialsReader;
 import org.softwaretestingboard.magento.pages.BasePage;
 
@@ -18,6 +19,8 @@ public class SearchResultsPage extends BasePage {
     protected List<WebElement> linkResults;
     @FindBy(css = "h1.page-title")
     protected WebElement headerTitle;
+    @FindBy(css = "span.qs-option-name")
+    protected List<WebElement> dropdownListResults;
 
     public Boolean checkResultsContainTheItem() {
         for (WebElement link : linkResults) {
@@ -31,5 +34,16 @@ public class SearchResultsPage extends BasePage {
 
     public Boolean checkTheSearchResultsTitle() {
         return headerTitle.getText().matches(".*" + reader.getItemName() + ".*");
+    }
+
+    public Boolean checkDropdownListContainsItem() {
+        wait.until(ExpectedConditions.visibilityOfAllElements(dropdownListResults));
+        for (WebElement result : dropdownListResults) {
+            String itemName = result.getText();
+            if (!itemName.matches("(?i).*" + reader.getItemName() + ".*")) {
+                return false;
+            }
+        }
+        return true;
     }
 }

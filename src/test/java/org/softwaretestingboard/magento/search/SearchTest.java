@@ -27,6 +27,15 @@ public class SearchTest extends BaseTest {
         homePage.searchForItem();
         SearchResultsPage resultsPage = new SearchResultsPage(driver);
         Boolean isHeaderContainsItemName = resultsPage.checkTheSearchResultsTitle();
-        assertTrue(isHeaderContainsItemName);
+        assertTrue(isHeaderContainsItemName, "The title doesn't contain item name");
+    }
+
+    @Test
+    @DisplayName("The dropdown results list should contain searched item")
+    void checkDropdownList() {
+        Boolean isSearchResultsContainItem = new HomePage(driver)
+                .searchForItemDoNotPressEnter()
+                .checkDropdownListContainsItem();
+        assertTrue(isSearchResultsContainItem, "The dropdown list with search results doesn't contain correct item");
     }
 }

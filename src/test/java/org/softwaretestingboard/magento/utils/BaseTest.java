@@ -13,6 +13,7 @@ public abstract class BaseTest {
     public void setup() {
         driver = new ChromeDriver();
         driver.get("https://magento.softwaretestingboard.com/");
+        driver.manage().window().maximize();
     }
 
     @AfterEach
