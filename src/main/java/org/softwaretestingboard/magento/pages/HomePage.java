@@ -16,6 +16,8 @@ public class HomePage extends BasePage{
     protected WebElement buttonCreateAccount;
     @FindBy(id = "search")
     protected WebElement searchField;
+    @FindBy(id = "ui-id-4")
+    protected WebElement menuButtonWoman;
 
     public void clickCreateAccountButton() {
         buttonCreateAccount.click();
@@ -24,5 +26,14 @@ public class HomePage extends BasePage{
     public void searchForItem() {
         searchField.sendKeys(reader.getItemName(), Keys.ENTER);
         new SearchResultsPage(driver);
+    }
+
+    public void chooseItem() {
+    menuButtonWoman.click();
+    }
+    public SearchResultsPage searchForItemDoNotPressEnter() {
+        searchField.sendKeys(reader.getItemName());
+        return new SearchResultsPage(driver);
+
     }
 }
