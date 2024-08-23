@@ -21,6 +21,8 @@ public class SearchResultsPage extends BasePage {
     protected WebElement headerTitle;
     @FindBy(css = "span.qs-option-name")
     protected List<WebElement> dropdownListResults;
+    @FindBy(className = "product-item-link")
+    protected List<WebElement> listResults;
 
     public Boolean checkResultsContainTheItem() {
         for (WebElement link : linkResults) {
@@ -45,5 +47,16 @@ public class SearchResultsPage extends BasePage {
             }
         }
         return true;
+    }
+
+    public Boolean checkTheSearchResultsContainBottoms() {
+        wait.until(ExpectedConditions.visibilityOfAllElements(listResults));
+        for (WebElement result : listResults) {
+            String itemName = result.getText();
+            if (itemName.matches("(?i).*" + reader.getItemName() + ".*")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
