@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.softwaretestingboard.magento.components.SearchResultsPage;
 import org.softwaretestingboard.magento.helpers.CredentialsReader;
 
+import java.util.List;
+
 public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
@@ -21,6 +23,8 @@ public class HomePage extends BasePage {
     protected WebElement menuButtonWoman;
     @FindBy(xpath = ".//ol[@class='items']/*[2]/a")
     protected WebElement bottomsButtonMenu;
+    @FindBy(xpath = ".//li[@class='authorization-link']/*")
+    protected List<WebElement> signInButtons;
 
     public void clickCreateAccountButton() {
         buttonCreateAccount.click();
@@ -40,5 +44,10 @@ public class HomePage extends BasePage {
         searchField.sendKeys(reader.getItemName());
         return new SearchResultsPage(driver);
 
+    }
+
+    public void clickSignInButtonHeader() {
+        WebElement signInButtonHeader = signInButtons.get(0);
+        signInButtonHeader.click();
     }
 }
