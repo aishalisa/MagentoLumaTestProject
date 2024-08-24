@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public abstract class BaseTest {
 
@@ -11,9 +12,12 @@ public abstract class BaseTest {
 
     @BeforeEach
     public void setup() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        // options.addArguments("--headless==new");
+        options.addArguments("start-maximized");
+        options.addArguments("--disable-search-engine-choice-screen");
+        driver = new ChromeDriver(options);
         driver.get("https://magento.softwaretestingboard.com/");
-        driver.manage().window().maximize();
     }
 
     @AfterEach

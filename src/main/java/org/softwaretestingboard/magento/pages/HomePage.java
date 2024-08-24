@@ -4,6 +4,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.softwaretestingboard.magento.components.SearchResultsPage;
 import org.softwaretestingboard.magento.helpers.CredentialsReader;
 
@@ -25,6 +26,21 @@ public class HomePage extends BasePage {
     protected WebElement bottomsButtonMenu;
     @FindBy(xpath = ".//li[@class='authorization-link']/*")
     protected List<WebElement> signInButtons;
+    @FindBy(xpath = ".//div[@class='panel header']/ul/li[1]/span")
+    protected WebElement welcomeMessage;
+
+    @FindBy(id = "email")
+    protected WebElement emailField;
+    @FindBy(id = "pass")
+    protected WebElement password;
+    @FindBy(id = "send2")
+    protected WebElement signInButtonBottom;
+
+    public void insertEmailPassword() {
+        emailField.sendKeys(reader.getUserEmail());
+        password.sendKeys(reader.getUserPassword());
+        signInButtonBottom.click();
+    }
 
     public void clickCreateAccountButton() {
         buttonCreateAccount.click();
@@ -43,11 +59,15 @@ public class HomePage extends BasePage {
     public SearchResultsPage searchForItemDoNotPressEnter() {
         searchField.sendKeys(reader.getItemName());
         return new SearchResultsPage(driver);
-
     }
 
     public void clickSignInButtonHeader() {
         WebElement signInButtonHeader = signInButtons.get(0);
         signInButtonHeader.click();
+    }
+
+    public String getMessage() {
+        driver.navigate().refresh();
+        return wait.until(ExpectedConditions.visibilityOf(welcomeMessage)).getText();
     }
 }
